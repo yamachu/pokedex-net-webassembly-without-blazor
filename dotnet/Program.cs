@@ -1,5 +1,13 @@
 using System;
 using System.Runtime.InteropServices.JavaScript;
+using Microsoft.Data.Sqlite;
+using Dapper;
+
+var conn = new SqliteConnection("Data Source=:memory:");
+conn.Open();
+var result = conn.QueryFirst<int>("select 1");
+Console.WriteLine(result);
+conn.Close();
 
 Console.WriteLine("Hello, Console!");
 
