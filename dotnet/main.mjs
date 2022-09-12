@@ -11,16 +11,14 @@ const { setModuleImports, getAssemblyExports, getConfig, runMainAndExit } = awai
     .create();
 
 setModuleImports("main.mjs", {
-    node: {
-        process: {
-            version: () => globalThis.process.version
-        }
+    sqlite: {
+        connection: () => "Source=:memory:"
     }
 });
 
 const config = getConfig();
 const exports = await getAssemblyExports(config.mainAssemblyName);
-const text = exports.MyClass.Greeting();
+const text = await exports.MyClass.ConnectionTest();
 console.log(text);
 
 await runMainAndExit(config.mainAssemblyName, ["dotnet", "is", "great!"]);
