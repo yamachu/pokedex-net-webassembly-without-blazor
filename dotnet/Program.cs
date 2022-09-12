@@ -1,8 +1,8 @@
 using System;
 using System.Runtime.InteropServices.JavaScript;
 using System.Threading.Tasks;
-using Microsoft.Data.Sqlite;
 using Dapper;
+using PokedexNetWebassembly.Infrastructures;
 
 Console.WriteLine("Hello, Console!");
 
@@ -10,12 +10,12 @@ return 0;
 
 public partial class MyClass
 {
-    private static SqliteConnection connection;
+    private static SqliteHelper? dbHelper;
 
     [JSExport]
     internal static Task<int> ConnectionTest()
     {
-        return AsyncBindConnection(
+        return dbHelper?.AsyncBindConnection(
             (c) => {
                 return c.QueryFirst<int>("select 1");
             },
@@ -26,44 +26,12 @@ public partial class MyClass
     [JSImport("sqlite.connection", "main.mjs")]
     internal static partial string GetSqliteConnectionString();
 
-    private static async Task<T> AsyncBindConnection<T>(Func<SqliteConnection, T> fn, Task<T> onFailConnection)
+    [JSExport]
+    private static void Initialize()
     {
-        if (!await OpenSqlite())
+        if (dbHelper == null)
         {
-            return await onFailConnection;
+            dbHelper = new SqliteHelper(GetSqliteConnectionString);
         }
-        var result = fn(connection);
-        await connection.CloseAsync();
-        return result;
     }
-
-    private static async Task<bool> OpenSqlite()
-    {
-        if (!_Initialize())
-        {
-            return false;
-        }
-        if (connection.State != System.Data.ConnectionState.Open)
-        {
-            await connection.OpenAsync();
-        }
-        return true;
-    }
-
-    private static bool _Initialize()
-    {
-        if (connection == null)
-        {
-            try
-            {
-                connection = new SqliteConnection($"Data {MyClass.GetSqliteConnectionString()}");
-            }
-            catch
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
 }

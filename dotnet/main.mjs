@@ -18,6 +18,7 @@ setModuleImports("main.mjs", {
 
 const config = getConfig();
 const exports = await getAssemblyExports(config.mainAssemblyName);
+exports.MyClass.Initialize();
 const text = await exports.MyClass.ConnectionTest();
 console.log(text);
 
