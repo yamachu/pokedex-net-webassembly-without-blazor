@@ -14,15 +14,22 @@ public class SqliteHelper
         GetSqliteConnectionString = getSqliteConnectionString;
     }
 
-    internal async Task<T> AsyncBindConnection<T>(Func<SqliteConnection, T> fn, Task<T> onFailConnection)
+    internal async Task<T> AsyncBindConnection<T>(Func<SqliteConnection, Task<T>> fn, Task<T> onFailConnection)
     {
         if (!await OpenSqlite())
         {
             return await onFailConnection;
         }
-        var result = fn(connection);
-        await connection.CloseAsync();
-        return result;
+        try
+        {
+            var result = await fn(connection);
+            await connection.CloseAsync();
+            return result;
+        }
+        catch (Exception e)
+        {
+            return await Task.FromException<T>(e);
+        }
     }
 
     private async Task<bool> OpenSqlite()

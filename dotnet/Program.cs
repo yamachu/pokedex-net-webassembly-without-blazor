@@ -17,7 +17,7 @@ public partial class MyClass
     {
         return dbHelper?.AsyncBindConnection(
             (c) => {
-                return c.QueryFirst<int>("select 1");
+                return c.QueryFirstAsync<int>("select 1");
             },
             Task.FromException<int>(new Exception("Cannot open connection sqlite"))
         );
