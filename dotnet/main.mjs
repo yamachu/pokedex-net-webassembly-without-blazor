@@ -12,7 +12,7 @@ const { setModuleImports, getAssemblyExports, getConfig, runMainAndExit } = awai
 
 setModuleImports("main.mjs", {
     sqlite: {
-        connection: () => "Source=:memory:"
+        connection: () => "Data Source=:memory:"
     }
 });
 

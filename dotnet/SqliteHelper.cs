@@ -51,7 +51,7 @@ public class SqliteHelper
         {
             try
             {
-                var conn = new SqliteConnection($"Data {GetSqliteConnectionString()}");
+                var conn = new SqliteConnection(GetSqliteConnectionString());
                 connection = conn;
             }
             catch
