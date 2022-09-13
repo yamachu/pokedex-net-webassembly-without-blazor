@@ -1,0 +1,19 @@
+{
+  "name": "console",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "run": "node dist/index.js"
+  },
+  "devDependencies": {
+    "@microsoft/dotnet-runtime-types": "file:../dotnet/bin/Release/net7.0/browser-wasm",
+    "@types/node": "16.11.58",
+    "typescript": "4.8.3"
+  },
+  "dependencies": {
+    "@microsoft/dotnet-runtime": "file:../dotnet/bin/Release/net7.0/browser-wasm/AppBundle"
+  }
+}
