@@ -23,6 +23,17 @@ public partial class MyClass
         );
     }
 
+    [JSExport]
+    internal static Task<int /* affected row */> ExecuteQuery(string query)
+    {
+        return dbHelper?.AsyncBindConnection(
+            (c) => {
+                return c.ExecuteAsync(query);
+            },
+            Task.FromException<int>(new Exception("Failed to execute query"))
+        );
+    }
+
     [JSImport("sqlite.connection", "main.mjs")]
     internal static partial string GetSqliteConnectionString();
 
