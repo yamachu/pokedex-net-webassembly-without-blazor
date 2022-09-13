@@ -2,7 +2,10 @@
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <RuntimeIdentifier>browser-wasm</RuntimeIdentifier>
-    <WasmMainJSPath>main.mjs</WasmMainJSPath>
+    <!-- libraryとしてexportしたい場合はカスタムしたpackage.jsonを指定する -->
+    <WasmMainJSPath>package.json</WasmMainJSPath>
+    <!-- このprojectでmain.mjsを実行したい場合は、WasmMainJSPathにmain.mjsを指定する -->
+    <!-- <WasmMainJSPath>main.mjs</WasmMainJSPath> -->
     <OutputType>Exe</OutputType>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
