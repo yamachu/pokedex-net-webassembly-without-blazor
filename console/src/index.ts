@@ -186,6 +186,9 @@ await exports.MyClass.ExecuteQuery(`
     (151,'ミュウ');
 `);
 
+// Dump all!!
+console.dir(JSON.parse(await exports.MyClass.FetchPokemons()));
+
 // Read generated pokedex.db on wasm FS
 const dbBuffer = Module.FS_readFile("/work/pokedex.db", {});
 
