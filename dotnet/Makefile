@@ -1,7 +1,7 @@
 CONFIGURATION := Release
-HERE := $(dir $(abspath "."))
+DOTNET := dotnet
 
 .PHONY: publish
 
 build: 
-	$(HERE)./dotnet.sh $@ -c $(CONFIGURATION)
+	$(DOTNET) $@ -c $(CONFIGURATION)
