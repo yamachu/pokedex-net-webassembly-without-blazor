@@ -1,8 +1,9 @@
 import { type FC } from "react";
+import { POKEDEX_DICT_PATH } from "../env";
 import { useFetchPokemons } from "./hooks/useFetchPokemons";
 
 export const App: FC = () => {
-  const { data: pokemons } = useFetchPokemons("/resources/pokedex.db");
+  const { data: pokemons } = useFetchPokemons(POKEDEX_DICT_PATH);
 
   return (
     <div>

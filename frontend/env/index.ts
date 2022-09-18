@@ -1,1 +1,2 @@
 export const POKEDEX_DOTNET_RUNTIME = process.env.POKEDEX_DOTNET_RUNTIME;
+export const POKEDEX_DICT_PATH = process.env.POKEDEX_DICT_PATH;
