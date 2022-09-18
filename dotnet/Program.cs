@@ -39,7 +39,8 @@ public partial class MyClass
     internal static Task<int> ConnectionTest()
     {
         return dbHelper?.AsyncBindConnection(
-            (c) => {
+            (c) =>
+            {
                 return c.QueryFirstAsync<int>("select 1");
             },
             Task.FromException<int>(new Exception("Cannot open connection sqlite"))
@@ -50,7 +51,8 @@ public partial class MyClass
     internal static Task<int /* affected row */> ExecuteQuery(string query)
     {
         return dbHelper?.AsyncBindConnection(
-            (c) => {
+            (c) =>
+            {
                 return c.ExecuteAsync(query);
             },
             Task.FromException<int>(new Exception("Failed to execute query"))
