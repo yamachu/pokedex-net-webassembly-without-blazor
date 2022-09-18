@@ -9,6 +9,8 @@
     <OutputType>Exe</OutputType>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>preview</LangVersion>
+    <!-- 他のprojectから参照しやすいように、rootディレクトリに吐き出す -->
+    <WasmAppDir>$([System.IO.Path]::Combine($(MSBuildProjectDirectory),"..", "AppBundle"))</WasmAppDir>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.123" />
