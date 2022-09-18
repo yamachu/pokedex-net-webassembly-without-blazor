@@ -1,0 +1,1 @@
+export const POKEDEX_DOTNET_RUNTIME = process.env.POKEDEX_DOTNET_RUNTIME;
