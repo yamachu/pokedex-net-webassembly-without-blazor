@@ -13,15 +13,24 @@ export const usePokedex = (dictUrl: string): UsePokedexReturnType => {
 
   const exported = useRef<PokedexAssemblyExported>();
 
-  const { data } = useDotnet(POKEDEX_DOTNET_RUNTIME);
+  const dotnetRuntime = useDotnet(POKEDEX_DOTNET_RUNTIME);
 
   // NOTE: 1st, Add dict to runtime
   useEffect(() => {
+    if (!dotnetRuntime.isLoaded) {
+      return;
+    }
+    if (dotnetRuntime.isLoaded && dotnetRuntime.runtime === undefined) {
+      // TODO: Error handling
+      console.error("Cannot use dotnet runtime");
+      return;
+    }
+    const { Module } = dotnetRuntime.runtime;
     fetch(dictUrl)
       .then((v) => v.arrayBuffer())
       .then((v) => {
-        data?.Module.FS_createPath("/", "work", true, true);
-        data?.Module.FS_createDataFile(
+        Module.FS_createPath("/", "work", true, true);
+        Module.FS_createDataFile(
           "/work",
           "pokedex.db",
           new Uint8Array(v),
@@ -30,29 +39,37 @@ export const usePokedex = (dictUrl: string): UsePokedexReturnType => {
         );
       })
       .then(() => setDictLoaded(true));
-  }, [dictUrl, data]);
+  }, [dictUrl, dotnetRuntime]);
 
   // NOTE: 2nd, Load dict in runtime
   useEffect(() => {
-    data?.setModuleImports("main.mjs", {
+    if (!dotnetRuntime.isLoaded) {
+      return;
+    }
+    if (dotnetRuntime.isLoaded && dotnetRuntime.runtime === undefined) {
+      // TODO: Error handling
+      console.error("Cannot use dotnet runtime");
+      return;
+    }
+    const { setModuleImports, getConfig, getAssemblyExports } =
+      dotnetRuntime.runtime;
+    setModuleImports("main.mjs", {
       sqlite: {
         connection: () => "Data Source=/work/pokedex.db",
       },
     });
     if (dictLoaded) {
-      const config = data?.getConfig();
+      const config = getConfig();
       if (config === undefined) {
         throw new Error();
       }
       (async () => {
-        exported.current = await data?.getAssemblyExports(
-          config.mainAssemblyName!
-        );
+        exported.current = await getAssemblyExports(config.mainAssemblyName!);
         exported.current.MyClass.Initialize();
         setInitialized(true);
       })();
     }
-  }, [data, dictLoaded]);
+  }, [dotnetRuntime, dictLoaded]);
 
   const result: UsePokedexReturnType = useMemo(() => {
     if (!initialized) {
