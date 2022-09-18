@@ -1,0 +1,77 @@
+name: Deploy Application with GitHub Pages
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["master"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  # Build job
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Pages
+        uses: actions/configure-pages@v2
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '7.0.x'
+          include-prerelease: true
+      - name: Setup wasm-tools
+        run: dotnet workload install wasm-experimental
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Build Shared Library
+        run: |
+          cd dotnet
+          make build
+      - name: Build pokedex.db
+        run: |
+          cd console
+          npm i
+          npm run build
+          npm run run
+      - name: Copy resources
+        run: |
+          mkdir -p ./frontend/public/resources
+          cp console/pokedex.db ./frontend/public/resources/pokedex.db
+          cp -r AppBundle ./frontend/public/AppBundle
+      - name: Build frontend
+        run: |
+          cd frontend
+          npm i
+          npm run build
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./frontend/dist
+
+  # Deployment job
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
