@@ -7,6 +7,9 @@ type UsePokedexReturnType =
   | { ok: false }
   | { ok: true; value: PokedexAssemblyExported };
 
+const separator = "__POKEDEX_SEPARATOR__";
+const pokedexRuntimeDictInitializedSet = new Set<string>();
+
 export const usePokedex = (dictUrl: string): UsePokedexReturnType => {
   const [dictLoaded, setDictLoaded] = useState(false);
   const [initialized, setInitialized] = useState(false);
@@ -30,13 +33,22 @@ export const usePokedex = (dictUrl: string): UsePokedexReturnType => {
       .then((v) => v.arrayBuffer())
       .then((v) => {
         Module.FS_createPath("/", "work", true, true);
-        Module.FS_createDataFile(
-          "/work",
-          "pokedex.db",
-          new Uint8Array(v),
-          true,
-          true
-        );
+        if (
+          !pokedexRuntimeDictInitializedSet.has(
+            POKEDEX_DOTNET_RUNTIME + separator + dictUrl
+          )
+        ) {
+          pokedexRuntimeDictInitializedSet.add(
+            POKEDEX_DOTNET_RUNTIME + separator + dictUrl
+          );
+          Module.FS_createDataFile(
+            "/work",
+            "pokedex.db",
+            new Uint8Array(v),
+            true,
+            true
+          );
+        }
       })
       .then(() => setDictLoaded(true));
   }, [dictUrl, dotnetRuntime]);
