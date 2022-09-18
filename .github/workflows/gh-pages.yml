@@ -54,11 +54,14 @@ jobs:
           mkdir -p ./frontend/public/resources
           cp console/pokedex.db ./frontend/public/resources/pokedex.db
           cp -r AppBundle ./frontend/public/AppBundle
+          chmod 644 ./frontend/public/AppBundle/mono-config.json
       - name: Build frontend
         run: |
           cd frontend
           npm i
-          POKEDEX_DOTNET_RUNTIME="/pokedex-net-webassembly-without-blazor/AppBundle/dotnet.js" POKEDEX_DICT_PATH="/pokedex-net-webassembly-without-blazor/resources/pokedex.db" npm run build
+          POKEDEX_DOTNET_RUNTIME="/pokedex-net-webassembly-without-blazor/AppBundle/dotnet.js" \
+          POKEDEX_DICT_PATH="/pokedex-net-webassembly-without-blazor/resources/pokedex.db" \
+          npm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
