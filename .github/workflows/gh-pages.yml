@@ -58,7 +58,7 @@ jobs:
         run: |
           cd frontend
           npm i
-          npm run build
+          POKEDEX_DOTNET_RUNTIME="/pokedex-net-webassembly-without-blazor/AppBundle/dotnet.js" POKEDEX_DICT_PATH="/pokedex-net-webassembly-without-blazor/resources/pokedex.db" npm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
