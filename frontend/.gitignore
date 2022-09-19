@@ -2,3 +2,5 @@
 /dist
 /public/**
 !/public/.gitkeep
+/generated/**
+!/generated/.gitkeep
