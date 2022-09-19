@@ -11,10 +11,18 @@
     <LangVersion>preview</LangVersion>
     <!-- 他のprojectから参照しやすいように、rootディレクトリに吐き出す -->
     <WasmAppDir>$([System.IO.Path]::Combine($(MSBuildProjectDirectory),"..", "AppBundle"))</WasmAppDir>
+
+    <JSPortOverrideTypeDefinitionOutputDir Condition="'$(TypeOutputDir)' != ''">$(TypeOutputDir)</JSPortOverrideTypeDefinitionOutputDir>
+    <JSPortOverrideTypeDefinitionOutputDir Condition="'$(TypeOutputDir)' == ''">$([System.IO.Path]::Combine($(MSBuildProjectDirectory), "..", "frontend", "generated"))</JSPortOverrideTypeDefinitionOutputDir>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.123" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.8" />
     <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.2-pre20220913165057" />
+    <PackageReference Include="NetWebAssemblyTSTypeGenerator" Version="0.0.0.2" OutputItemType="Analyzer" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <CompilerVisibleProperty Include="JSPortOverrideTypeDefinitionOutputDir" />
   </ItemGroup>
 </Project>
