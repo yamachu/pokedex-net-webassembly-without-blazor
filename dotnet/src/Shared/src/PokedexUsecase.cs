@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
-using PokedexNetWebassembly.Infrastructures;
+using PokedexNetWebassembly.Shared.Infrastructures;
 
-namespace PokedexNetWebassembly.Usecases;
+namespace PokedexNetWebassembly.Shared.Usecases;
 
 public class QueryPokemon
 {
-    internal static Task<Pokemon[]> FetchPokemons(SqliteHelper dbHelper)
+    public static Task<Pokemon[]> FetchPokemons(SqliteHelper dbHelper)
     {
         return dbHelper.AsyncBindConnection(
             async (c) =>

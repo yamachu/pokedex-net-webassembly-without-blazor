@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
 
-namespace PokedexNetWebassembly.Infrastructures;
+namespace PokedexNetWebassembly.Shared.Infrastructures;
 
 public class SqliteHelper
 {
@@ -14,7 +14,7 @@ public class SqliteHelper
         GetSqliteConnectionString = getSqliteConnectionString;
     }
 
-    internal async Task<T> AsyncBindConnection<T>(Func<SqliteConnection, Task<T>> fn, Task<T> onFailConnection)
+    public async Task<T> AsyncBindConnection<T>(Func<SqliteConnection, Task<T>> fn, Task<T> onFailConnection)
     {
         if (!await OpenSqlite())
         {
