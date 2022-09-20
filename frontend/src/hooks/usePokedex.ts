@@ -1,8 +1,14 @@
+import {
+  getTypedAssemblyExports,
+  setTypedModuleImports,
+} from "dotnet-webassembly-type-helper";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { POKEDEX_DOTNET_RUNTIME } from "../../env";
 import { useDotnet } from "./useDotnet";
 
-type PokedexAssemblyExported = any;
+type PokedexAssemblyExported = Awaited<
+  ReturnType<typeof getTypedAssemblyExports>
+>;
 type UsePokedexReturnType =
   | { ok: false }
   | { ok: true; value: PokedexAssemblyExported };
@@ -65,7 +71,7 @@ export const usePokedex = (dictUrl: string): UsePokedexReturnType => {
     }
     const { setModuleImports, getConfig, getAssemblyExports } =
       dotnetRuntime.runtime;
-    setModuleImports("main.mjs", {
+    setTypedModuleImports(setModuleImports, "main.mjs", {
       sqlite: {
         connection: () => "Data Source=/work/pokedex.db",
       },
@@ -76,7 +82,9 @@ export const usePokedex = (dictUrl: string): UsePokedexReturnType => {
         throw new Error();
       }
       (async () => {
-        exported.current = await getAssemblyExports(config.mainAssemblyName!);
+        exported.current = await getTypedAssemblyExports(
+          getAssemblyExports(config.mainAssemblyName!)
+        );
         exported.current.MyClass.Initialize();
         setInitialized(true);
       })();
@@ -91,7 +99,7 @@ export const usePokedex = (dictUrl: string): UsePokedexReturnType => {
     }
     return {
       ok: true,
-      value: exported.current,
+      value: exported.current!,
     };
   }, [initialized]);
 
