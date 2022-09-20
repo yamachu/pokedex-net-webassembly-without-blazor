@@ -23,7 +23,8 @@ This application requires dotnet runtime and pokedex.db, so before running this 
 
 ```sh
 $ cp -r ../AppBundle ./public/AppBundle
-$ cp ../consonle/pokedex.db ./public/resources/pokedex.db
+$ mkdir -p ./public/resources
+$ cp ../console/pokedex.db ./public/resources/pokedex.db
 ```
 
 To generate `AppBundle`
