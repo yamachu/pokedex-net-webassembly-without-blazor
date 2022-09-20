@@ -1,6 +1,8 @@
 using System;
+using System.Data;
 using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
+using Dapper;
 
 namespace PokedexNetWebassembly.Shared.Infrastructures;
 
@@ -53,6 +55,7 @@ public class SqliteHelper
             {
                 var conn = new SqliteConnection(GetSqliteConnectionString());
                 connection = conn;
+                SqlMapper.AddTypeHandler(typeof(int), new IntHandler());
             }
             catch
             {
@@ -62,4 +65,18 @@ public class SqliteHelper
         return true;
     }
 
+}
+
+// https://learn.microsoft.com/en-us/dotnet/standard/data/sqlite/dapper-limitations#data-types
+internal abstract class SqliteTypeHandler<T> : SqlMapper.TypeHandler<T>
+{
+    // Parameters are converted by Microsoft.Data.Sqlite
+    public override void SetValue(IDbDataParameter parameter, T value)
+        => parameter.Value = value;
+}
+
+internal class IntHandler : SqliteTypeHandler<int>
+{
+    public override int Parse(object value)
+        => Convert.ToInt32(value);
 }
