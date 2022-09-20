@@ -28,4 +28,28 @@ public class QueryPokemon
             Task.FromException<Pokemon[]>(new Exception("Cannot fetch pokemons"))
         );
     }
+
+    public static Task<Pokemon[]> FetchPokemonsWithMapping(SqliteHelper dbHelper)
+    {
+        return dbHelper.AsyncBindConnection(
+            async (c) =>
+            {
+                var result = await c.QueryAsync<Pokemon>("select id, name from pokemons");
+                return result.ToArray();
+            },
+            Task.FromException<Pokemon[]>(new Exception("Cannot fetch pokemons"))
+        );
+    }
+
+    public static Task<Pokemon[]> FetchPokemonsWithMapping(SqliteHelper dbHelper, string query)
+    {
+        return dbHelper.AsyncBindConnection(
+            async (c) =>
+            {
+                var result = await c.QueryAsync<Pokemon>("select id, name from pokemons where id = @query or name like @query", new { query });
+                return result.ToArray();
+            },
+            Task.FromException<Pokemon[]>(new Exception("Cannot fetch pokemons"))
+        );
+    }
 }
