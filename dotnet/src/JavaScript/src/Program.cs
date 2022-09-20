@@ -30,7 +30,7 @@ public partial class MyClass
         {
             return await Task.FromException<string>(new Exception("Must Initialize"));
         }
-        var result = await QueryPokemon.FetchPokemonsWithMapping(dbHelper);
+        var result = await QueryPokemon.FetchPokemons(dbHelper);
 
         return JsonSerializer.Serialize(new FetchPokemonsReturnJsonType(result), typeof(FetchPokemonsReturnJsonType), PokemonsJsonSerializerContext.Default);
     }
