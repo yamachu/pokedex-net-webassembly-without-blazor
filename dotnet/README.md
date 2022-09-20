@@ -9,7 +9,7 @@
 You can build the application from Visual Studio or by dotnet cli
 
 ```
-dotnet build -c Debug/Release
+dotnet build -c Debug/Release ./src/JavaScript/src
 ```
 
 After building the application, the result is in the `../AppBundle` directory.
@@ -29,7 +29,7 @@ Before running test connection application, you must modify dotnet.csproj
 ```
 
 ```
-dotnet run -c Debug/Release
+dotnet run -c Debug/Release --project ./src/JavaScript/src
 ```
 
 Or you can start any static file server from the AppBundle directory

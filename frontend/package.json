@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@microsoft/dotnet-runtime-types": "file:../dotnet/bin/Release/net7.0/browser-wasm",
+    "@microsoft/dotnet-runtime-types": "file:../dotnet/src/JavaScript/src/bin/Release/net7.0/browser-wasm",
     "@types/node": "16.11.59",
     "@types/react": "18.0.20",
     "@types/react-dom": "18.0.6",

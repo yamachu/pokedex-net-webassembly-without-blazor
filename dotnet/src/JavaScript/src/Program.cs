@@ -4,9 +4,9 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Dapper;
-using PokedexNetWebassembly;
-using PokedexNetWebassembly.Infrastructures;
-using PokedexNetWebassembly.Usecases;
+using PokedexNetWebassembly.Shared;
+using PokedexNetWebassembly.Shared.Infrastructures;
+using PokedexNetWebassembly.Shared.Usecases;
 
 Console.WriteLine("Hello, Console!");
 
