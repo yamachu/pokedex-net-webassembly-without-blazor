@@ -42,7 +42,7 @@ jobs:
       - name: Build Shared Library
         run: |
           cd dotnet
-          make build
+          make publish
       - name: Build pokedex.db
         run: |
           cd console
