@@ -3,6 +3,7 @@ import {
   getTypedAssemblyExports,
   setTypedModuleImports,
 } from "dotnet-webassembly-type-helper";
+import { v4 as uuid } from "uuid";
 import { beforeEach, describe, expect, it as _it, TestAPI } from "vitest";
 
 describe("ConnectionTest", () => {
@@ -12,11 +13,9 @@ describe("ConnectionTest", () => {
 
   const it = _it as TestAPI<LocalDotnetRuntimeContext>;
 
-  // NOTE: For ignoring to share state between each test case
-  let newDotnetRuntimeKey = 0;
-
   beforeEach<LocalDotnetRuntimeContext>(async (context) => {
-    const m = `../node_modules/@microsoft/dotnet-runtime/dotnet.js?${newDotnetRuntimeKey++}`;
+    // NOTE: For ignoring to share state between each test case
+    const m = `../node_modules/@microsoft/dotnet-runtime/dotnet.js?${uuid()}`;
     const { dotnet, exit } = await import(m).then(
       (v: typeof import("@microsoft/dotnet-runtime")) => v
     );
