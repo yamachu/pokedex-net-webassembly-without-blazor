@@ -1,0 +1,17 @@
+build:
+	$(MAKE) _build/dotnet _build/console _build/frontend
+
+test:
+	$(MAKE) _test/dotnet
+
+_build/dotnet:
+	$(MAKE) -C dotnet setup build
+
+_build/console:
+	$(MAKE) -C console setup build run
+
+_build/frontend:
+	$(MAKE) -C frontend setup resources build
+
+_test/dotnet:
+	$(MAKE) -C dotnet test

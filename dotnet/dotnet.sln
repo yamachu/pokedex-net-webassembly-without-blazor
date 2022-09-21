@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4717917C-837A-4617-8617-9FB6796E5A58}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JavaScript", "JavaScript", "{C3A5D303-4760-415E-9D5C-F08E23E7C829}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnet", "src\JavaScript\src\dotnet.csproj", "{FA1965E8-2CE1-48E9-903A-920605A267EF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{F957AFCD-1185-4D30-9E29-7191A8FF9511}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokedexNetWebassembly.Shared", "src\Shared\src\PokedexNetWebassembly.Shared.csproj", "{DAF5F168-8D0D-4E9C-85AD-D802707CE3D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokedexNetWebassembly.Shared.Test", "src\Shared\test\PokedexNetWebassembly.Shared.Test.csproj", "{DAFDAA1F-FE78-4081-8859-2163B33BD0AC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA1965E8-2CE1-48E9-903A-920605A267EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA1965E8-2CE1-48E9-903A-920605A267EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA1965E8-2CE1-48E9-903A-920605A267EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA1965E8-2CE1-48E9-903A-920605A267EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAF5F168-8D0D-4E9C-85AD-D802707CE3D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAF5F168-8D0D-4E9C-85AD-D802707CE3D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAF5F168-8D0D-4E9C-85AD-D802707CE3D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAF5F168-8D0D-4E9C-85AD-D802707CE3D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAFDAA1F-FE78-4081-8859-2163B33BD0AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAFDAA1F-FE78-4081-8859-2163B33BD0AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAFDAA1F-FE78-4081-8859-2163B33BD0AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAFDAA1F-FE78-4081-8859-2163B33BD0AC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C3A5D303-4760-415E-9D5C-F08E23E7C829} = {4717917C-837A-4617-8617-9FB6796E5A58}
+		{FA1965E8-2CE1-48E9-903A-920605A267EF} = {C3A5D303-4760-415E-9D5C-F08E23E7C829}
+		{F957AFCD-1185-4D30-9E29-7191A8FF9511} = {4717917C-837A-4617-8617-9FB6796E5A58}
+		{DAF5F168-8D0D-4E9C-85AD-D802707CE3D3} = {F957AFCD-1185-4D30-9E29-7191A8FF9511}
+		{DAFDAA1F-FE78-4081-8859-2163B33BD0AC} = {F957AFCD-1185-4D30-9E29-7191A8FF9511}
+	EndGlobalSection
+EndGlobal
