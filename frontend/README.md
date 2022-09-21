@@ -22,7 +22,7 @@ $ npm run preview
 This application requires dotnet runtime and pokedex.db, so before running this application, you must prepare these files.
 
 ```sh
-$ cp -r ../AppBundle ./public/AppBundle
+$ cp -r ../generated/AppBundle ./public/AppBundle
 $ mkdir -p ./public/resources
 $ cp ../console/pokedex.db ./public/resources/pokedex.db
 ```

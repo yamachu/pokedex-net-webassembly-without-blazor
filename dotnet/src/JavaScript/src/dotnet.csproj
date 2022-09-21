@@ -10,10 +10,10 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>preview</LangVersion>
     <!-- 他のprojectから参照しやすいように、rootディレクトリに吐き出す -->
-    <WasmAppDir>$([System.IO.Path]::Combine($(MSBuildProjectDirectory),"..", "..", "..", "..", "AppBundle"))</WasmAppDir>
+    <WasmAppDir>$([System.IO.Path]::Combine($(MSBuildProjectDirectory),"..", "..", "..", "..", "generated", "AppBundle"))</WasmAppDir>
 
     <JSPortOverrideTypeDefinitionOutputDir Condition="'$(TypeOutputDir)' != ''">$(TypeOutputDir)</JSPortOverrideTypeDefinitionOutputDir>
-    <JSPortOverrideTypeDefinitionOutputDir Condition="'$(TypeOutputDir)' == ''">$([System.IO.Path]::Combine($(MSBuildProjectDirectory), "..", "..", "..", "..", "frontend", "generated"))</JSPortOverrideTypeDefinitionOutputDir>
+    <JSPortOverrideTypeDefinitionOutputDir Condition="'$(TypeOutputDir)' == ''">$([System.IO.Path]::Combine($(MSBuildProjectDirectory), "..", "..", "..", "..", "generated", "dotnet-webassembly-type-helper"))</JSPortOverrideTypeDefinitionOutputDir>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.123" />
@@ -28,4 +28,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\src\PokedexNetWebassembly.Shared.csproj" />
   </ItemGroup>
+
+  <Target Name="MakeTypeOutputDir" BeforeTargets="BeforeCompile">
+    <MakeDir Directories="$(JSPortOverrideTypeDefinitionOutputDir)"/>
+  </Target>
 </Project>
