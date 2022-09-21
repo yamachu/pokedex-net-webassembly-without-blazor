@@ -52,8 +52,8 @@ jobs:
       - name: Copy resources
         run: |
           mkdir -p ./frontend/public/resources
-          cp console/pokedex.db ./frontend/public/resources/pokedex.db
-          cp -r AppBundle ./frontend/public/AppBundle
+          cp ./console/pokedex.db ./frontend/public/resources/pokedex.db
+          cp -r ./generated/AppBundle ./frontend/public/AppBundle
           chmod 644 ./frontend/public/AppBundle/mono-config.json
       - name: Build frontend
         run: |

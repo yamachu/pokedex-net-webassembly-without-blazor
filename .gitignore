@@ -1,1 +1,2 @@
-/AppBundle
+/generated/**
+!/generated/.gitkeep
