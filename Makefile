@@ -2,7 +2,7 @@ build:
 	$(MAKE) _build/dotnet _build/console _build/frontend
 
 test:
-	$(MAKE) _test/dotnet
+	$(MAKE) _test/dotnet _test/frontend
 
 _build/dotnet:
 	$(MAKE) -C dotnet setup build
@@ -15,3 +15,6 @@ _build/frontend:
 
 _test/dotnet:
 	$(MAKE) -C dotnet test
+
+_test/frontend:
+	$(MAKE) -C frontend test

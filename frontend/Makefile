@@ -4,6 +4,10 @@ setup:
 build:
 	npm run build
 
+.PHONY: test
+test:
+	npm test
+
 resources:
 	mkdir -p ./public/resources
 	cp ../console/pokedex.db ./public/resources/pokedex.db
