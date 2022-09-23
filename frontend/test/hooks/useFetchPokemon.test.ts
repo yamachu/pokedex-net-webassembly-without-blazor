@@ -37,10 +37,13 @@ describe("useFetchPokemon", async () => {
 
     expect(result.current.data).toStrictEqual([]);
 
-    await waitFor(() => {
-      const fetchedDataLength = result.current.data?.length ?? 0;
-      expect(fetchedDataLength > 0).toBe(true);
-    });
+    await waitFor(
+      () => {
+        const fetchedDataLength = result.current.data?.length ?? 0;
+        expect(fetchedDataLength > 0).toBe(true);
+      },
+      { timeout: 5000 }
+    );
     assert(result.current.data !== undefined);
     expect(result.current.data).toStrictEqual([
       {
