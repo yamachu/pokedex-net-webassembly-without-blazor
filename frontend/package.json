@@ -19,7 +19,7 @@
     "vite": "3.1.2"
   },
   "dependencies": {
-    "@microsoft/dotnet-runtime": "file:../AppBundle",
+    "@microsoft/dotnet-runtime": "file:../generated/AppBundle",
     "dotnet-webassembly-type-helper": "file:../generated/dotnet-webassembly-type-helper",
     "react": "18.2.0",
     "react-dom": "18.2.0",
