@@ -70,4 +70,57 @@ describe("ConnectionTest", () => {
       ],
     });
   });
+
+  it(`return id 0 pokemon as string by passing query`, async (ctx) => {
+    const { getAssemblyExports, setModuleImports, getConfig, Module } =
+      ctx.runtimeAPI;
+
+    const config = getConfig();
+    const exported = await getTypedAssemblyExports(
+      getAssemblyExports(config.mainAssemblyName!)
+    );
+    setTypedModuleImports(setModuleImports, "main.mjs", {
+      sqlite: {
+        connection: () => "Data Source=/work/pokedex.db",
+      },
+    });
+
+    Module.FS_createPath("/", "work", true, true);
+    const dbFixture = await readFile(join(FixtureDir, "0-152.db"));
+    Module.FS_createDataFile(
+      "/work",
+      "pokedex.db",
+      dbFixture,
+      true,
+      true,
+      true
+    );
+
+    exported.MyClass.Initialize();
+    expect(
+      await exported.MyClass.FetchPokemonsWithQuery("0").then((v: string) =>
+        JSON.parse(v)
+      )
+    ).toStrictEqual({
+      pokemons: [
+        {
+          id: 0,
+          name: "ヤマチュウ",
+        },
+      ],
+    });
+
+    expect(
+      await exported.MyClass.FetchPokemonsWithQuery("ヤマ").then((v: string) =>
+        JSON.parse(v)
+      )
+    ).toStrictEqual({
+      pokemons: [
+        {
+          id: 0,
+          name: "ヤマチュウ",
+        },
+      ],
+    });
+  });
 });
