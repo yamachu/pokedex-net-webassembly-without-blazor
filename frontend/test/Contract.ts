@@ -5,4 +5,4 @@ export const DotnetRuntimeRealDir = join(
   "@microsoft",
   "dotnet-runtime"
 );
-export const FixtureDir = "file://" + join("..", "fixtures");
+export const FixtureDir = join("..", "fixtures");
