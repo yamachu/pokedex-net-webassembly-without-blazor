@@ -17,4 +17,7 @@ const fetchWrapper = (url: string) => {
     };
   });
 };
-window.fetch = window.fetch ?? fetchWrapper;
+
+// NOTE: Node v18 provides fetch impl, but it does not support `file://`
+//       So we override it by using own fetchWrapper
+window.fetch = fetchWrapper as any as typeof fetch;
