@@ -34,6 +34,27 @@ public class PokedexNetWebassemblySharedTest
     }
 
     [Fact]
+    public async Task FetchPokemon()
+    {
+        var dbHelper = new SqliteHelper(() => "Data Source=./fixtures/0-152.db");
+        var pokemon0 = await QueryPokemon.FetchPokemons(dbHelper, "0");
+        Assert.Equal(
+            new Pokemon[] {
+                new Pokemon(0, "ヤマチュウ")
+            },
+            pokemon0
+        );
+
+        var pokemon00 = await QueryPokemon.FetchPokemons(dbHelper, "ヤマチュ");
+        Assert.Equal(
+            new Pokemon[] {
+                new Pokemon(0, "ヤマチュウ")
+            },
+            pokemon00
+        );
+    }
+
+    [Fact]
     public async Task FetchPokemonWithMapping()
     {
         var dbHelper = new SqliteHelper(() => "Data Source=./fixtures/0-152.db");
