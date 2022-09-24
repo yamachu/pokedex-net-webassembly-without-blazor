@@ -30,6 +30,7 @@
     "@microsoft/dotnet-runtime": "file:../generated/AppBundle",
     "@tanstack/react-query": "4.3.9",
     "dotnet-webassembly-type-helper": "file:../generated/dotnet-webassembly-type-helper",
+    "modern-normalize": "1.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   }
