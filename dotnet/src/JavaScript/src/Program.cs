@@ -36,6 +36,19 @@ public partial class MyClass
     }
 
     [JSExport]
+    [return: JSMarshalAs<JSType.Promise<JSType.String>>]
+    internal async static Task<string> FetchPokemonsWithQuery(string query)
+    {
+        if (dbHelper == null)
+        {
+            return await Task.FromException<string>(new Exception("Must Initialize"));
+        }
+        var result = await QueryPokemon.FetchPokemons(dbHelper, query);
+
+        return JsonSerializer.Serialize(new FetchPokemonsReturnJsonType(result), typeof(FetchPokemonsReturnJsonType), PokemonsJsonSerializerContext.Default);
+    }
+
+    [JSExport]
     internal static Task<int> ConnectionTest()
     {
         return dbHelper?.AsyncBindConnection(
