@@ -1,6 +1,6 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import assert from "assert";
-import { sep } from "path";
+import { join } from "path";
 import { beforeEach, describe, expect, it as _it, TestAPI } from "vitest";
 import { usePokedex } from "../../src/hooks/usePokedex";
 import { FixtureDir } from "../Contract";
@@ -14,8 +14,7 @@ describe("usePokedex", () => {
 
   it(`can fetchPokemons`, async () => {
     const { result } = renderHook(() =>
-      // NOTE: join remove `file://`
-      usePokedex(FixtureDir + sep + "0-152.db")
+      usePokedex(join(FixtureDir, "0-152.db"))
     );
 
     expect(result.current.ok).toBe(false);

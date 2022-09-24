@@ -1,7 +1,7 @@
 import { QueryClient } from "@tanstack/react-query";
 import { renderHook, waitFor } from "@testing-library/react";
 import { assert } from "console";
-import { sep } from "path";
+import { join } from "path";
 import { beforeEach, describe, expect, it as _it, TestAPI } from "vitest";
 import { useFetchPokemons } from "../../src/hooks/useFetchPokemons";
 import { FixtureDir } from "../Contract";
@@ -25,9 +25,7 @@ describe("useFetchPokemon", async () => {
     const wrapper = ReactQueryClientProviderWrapper(queryClient);
 
     const { result } = renderHook(
-      () =>
-        // NOTE: join remove `file://`
-        useFetchPokemons(FixtureDir + sep + "0-152.db"),
+      () => useFetchPokemons(join(FixtureDir, "0-152.db")),
       {
         wrapper,
       }
