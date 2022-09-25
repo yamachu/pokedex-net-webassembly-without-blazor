@@ -34,6 +34,14 @@ export const usePokedex = (dictUrl: string): UsePokedexReturnType => {
       console.error("Cannot use dotnet runtime");
       return;
     }
+    if (
+      pokedexRuntimeDictInitializedSet.has(
+        POKEDEX_DOTNET_RUNTIME + separator + dictUrl
+      )
+    ) {
+      setDictLoaded(true);
+      return;
+    }
     const { Module } = dotnetRuntime.runtime;
     fetch(dictUrl)
       .then((v) => v.arrayBuffer())
