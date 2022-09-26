@@ -71,7 +71,7 @@ describe("ConnectionTest", () => {
     });
   });
 
-  it(`return id 0 pokemon as string by passing query`, async (ctx) => {
+  it(`return filtered pokemon as string by passing query`, async (ctx) => {
     const { getAssemblyExports, setModuleImports, getConfig, Module } =
       ctx.runtimeAPI;
 
@@ -111,14 +111,14 @@ describe("ConnectionTest", () => {
     });
 
     expect(
-      await exported.MyClass.FetchPokemonsWithQuery("ヤマ").then((v: string) =>
+      await exported.MyClass.FetchPokemonsWithQuery("けつ").then((v: string) =>
         JSON.parse(v)
       )
     ).toStrictEqual({
       pokemons: [
         {
-          id: 0,
-          name: "ヤマチュウ",
+          id: 152,
+          name: "けつばん",
         },
       ],
     });

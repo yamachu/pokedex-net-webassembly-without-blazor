@@ -45,10 +45,10 @@ public class PokedexNetWebassemblySharedTest
             pokemon0
         );
 
-        var pokemon00 = await QueryPokemon.FetchPokemons(dbHelper, "ヤマチュ");
+        var pokemon00 = await QueryPokemon.FetchPokemons(dbHelper, "けつ");
         Assert.Equal(
             new Pokemon[] {
-                new Pokemon(0, "ヤマチュウ")
+                new Pokemon(152, "けつばん")
             },
             pokemon00
         );

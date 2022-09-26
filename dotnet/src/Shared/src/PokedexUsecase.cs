@@ -36,14 +36,18 @@ public class QueryPokemon
         return dbHelper.AsyncBindConnection(
             async (c) =>
             {
-                var command = c.CreateCommand();
-                command.CommandText= "select id, name from pokemons where id = @queryMaybeId or name like '%@queryMaybeName%'";
+                using var command = c.CreateCommand();
+                command.CommandText = "select id, name from pokemons where id = @MAYBEID or name like @MAYBENAME";
                 var maybeId = -1;
-                _ = int.TryParse(query, out maybeId);
-                command.Parameters.Add(new SqliteParameter { SqliteType = SqliteType.Integer, Value = maybeId, ParameterName = "queryMaybeId" });
-                command.Parameters.Add(new SqliteParameter { SqliteType = SqliteType.Text, Value = query, ParameterName = "queryMaybeName" });
-                var reader = await command.ExecuteReaderAsync();
-                return reader.ToEnumerable().Select(v => {
+                if (!int.TryParse(query, out maybeId))
+                {
+                    maybeId = -1;
+                }
+                command.Parameters.Add(new SqliteParameter { SqliteType = SqliteType.Integer, Value = maybeId, ParameterName = "@MAYBEID" });
+                command.Parameters.Add(new SqliteParameter { SqliteType = SqliteType.Text, Value = $"%{query}%", ParameterName = "@MAYBENAME", DbType = System.Data.DbType.String });
+                using var reader = await command.ExecuteReaderAsync();
+                return reader.ToEnumerable().Select(v =>
+                {
                     var id = Convert.ToInt32(v["id"]);
                     var name = (string)v["name"];
                     return new Pokemon(id, name);
