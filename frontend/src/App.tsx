@@ -3,6 +3,7 @@ import "modern-normalize/modern-normalize.css";
 import { FC, PropsWithChildren } from "react";
 import { HashRouter, Link, Route, Routes } from "react-router-dom";
 import { githubRepositoryUrl } from "./constant";
+import { Advanced } from "./pages/Advanced";
 import { Basic } from "./pages/Basic";
 import { Index } from "./pages/Index";
 
@@ -39,6 +40,7 @@ export const App: FC = () => {
         <Routes>
           <Route index={true} element={<Index />} />
           <Route path={"/basic"} element={<Basic />} />
+          <Route path={"/advanced"} element={<Advanced />} />
         </Routes>
       </div>
     </HashRouter>
