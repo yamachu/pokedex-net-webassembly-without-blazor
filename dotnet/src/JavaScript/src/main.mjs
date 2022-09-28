@@ -18,8 +18,8 @@ setModuleImports("main.mjs", {
 
 const config = getConfig();
 const exports = await getAssemblyExports(config.mainAssemblyName);
-exports.MyClass.Initialize();
-const text = await exports.MyClass.ConnectionTest();
+exports.PokedexMaster.Initialize();
+const text = await exports.PokedexMaster.ConnectionTest();
 console.log(text);
 
 await runMainAndExit(config.mainAssemblyName, ["dotnet", "is", "great!"]);

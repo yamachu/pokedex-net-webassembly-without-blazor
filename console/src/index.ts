@@ -27,9 +27,9 @@ setModuleImports("main.mjs", {
 const config = getConfig();
 const exports = await getAssemblyExports(config.mainAssemblyName!);
 
-exports.MyClass.Initialize();
+exports.PokedexMaster.Initialize();
 
-await exports.MyClass.ExecuteQuery(`
+await exports.PokedexMaster.ExecuteQuery(`
   create table pokemons(id integer primary key, name text);
   insert into pokemons(id, name) values
     (0,'ヤマチュウ'),
@@ -187,7 +187,7 @@ await exports.MyClass.ExecuteQuery(`
 `);
 
 // Dump all!!
-console.dir(JSON.parse(await exports.MyClass.FetchPokemons()));
+console.dir(JSON.parse(await exports.PokedexMaster.FetchPokemons()));
 
 // Read generated pokedex.db on wasm FS
 const dbBuffer = Module.FS_readFile("/work/pokedex.db", {});

@@ -57,9 +57,11 @@ describe("ConnectionTest", () => {
       true
     );
 
-    exported.MyClass.Initialize();
+    exported.PokedexMaster.Initialize();
     expect(
-      await exported.MyClass.FetchPokemons().then((v: string) => JSON.parse(v))
+      await exported.PokedexMaster.FetchPokemons().then((v: string) =>
+        JSON.parse(v)
+      )
     ).toStrictEqual({
       pokemons: [
         {
@@ -96,10 +98,10 @@ describe("ConnectionTest", () => {
       true
     );
 
-    exported.MyClass.Initialize();
+    exported.PokedexMaster.Initialize();
     expect(
-      await exported.MyClass.FetchPokemonsWithQuery("0").then((v: string) =>
-        JSON.parse(v)
+      await exported.PokedexMaster.FetchPokemonsWithQuery("0").then(
+        (v: string) => JSON.parse(v)
       )
     ).toStrictEqual({
       pokemons: [
@@ -111,8 +113,8 @@ describe("ConnectionTest", () => {
     });
 
     expect(
-      await exported.MyClass.FetchPokemonsWithQuery("けつ").then((v: string) =>
-        JSON.parse(v)
+      await exported.PokedexMaster.FetchPokemonsWithQuery("けつ").then(
+        (v: string) => JSON.parse(v)
       )
     ).toStrictEqual({
       pokemons: [

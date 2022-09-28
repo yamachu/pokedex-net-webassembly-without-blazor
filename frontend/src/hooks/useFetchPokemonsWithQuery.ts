@@ -12,7 +12,7 @@ export const useFetchPokemonsWithQuery = (dictUrl: string, query: string) => {
       if (!client.ok) {
         return Promise.resolve([]);
       }
-      return client.value.MyClass.FetchPokemonsWithQuery(_query)
+      return client.value.PokedexMaster.FetchPokemonsWithQuery(_query)
         .then((v: string) => JSON.parse(v))
         .then((v: Pokemons) => v.pokemons);
     },

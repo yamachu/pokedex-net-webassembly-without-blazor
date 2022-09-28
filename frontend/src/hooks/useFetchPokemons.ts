@@ -11,7 +11,7 @@ export const useFetchPokemons = (dictUrl: string) => {
     if (!client.ok) {
       return Promise.resolve([]);
     }
-    return client.value.MyClass.FetchPokemons()
+    return client.value.PokedexMaster.FetchPokemons()
       .then((v: string) => JSON.parse(v))
       .then((v: Pokemons) => v.pokemons);
   });

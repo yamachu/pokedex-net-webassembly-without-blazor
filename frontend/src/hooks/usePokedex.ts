@@ -11,7 +11,7 @@ type PokedexAssemblyExported = Awaited<
 >;
 type UsePokedexReturnType =
   | { ok: false }
-  | { ok: true; value: PokedexAssemblyExported };
+  | { ok: true; value: Pick<PokedexAssemblyExported, "PokedexMaster"> };
 
 const separator = "__POKEDEX_SEPARATOR__";
 const pokedexRuntimeDictInitializedSet = new Set<string>();
@@ -93,7 +93,7 @@ export const usePokedex = (dictUrl: string): UsePokedexReturnType => {
         exported.current = await getTypedAssemblyExports(
           getAssemblyExports(config.mainAssemblyName!)
         );
-        exported.current.MyClass.Initialize();
+        exported.current.PokedexMaster.Initialize();
         setInitialized(true);
       })();
     }
