@@ -28,7 +28,7 @@ describe("usePokedex", () => {
     expect(result.current.value).toBeDefined();
 
     const fetchedPokemons: string =
-      await result.current.value.MyClass.FetchPokemons();
+      await result.current.value.PokedexMaster.FetchPokemons();
 
     expect(fetchedPokemons).toBeTypeOf("string");
   });

@@ -44,8 +44,8 @@ describe("ConnectionTest", () => {
       },
     });
 
-    exported.MyClass.Initialize();
-    expect(await exported.MyClass.ConnectionTest()).toBe(1);
+    exported.PokedexMaster.Initialize();
+    expect(await exported.PokedexMaster.ConnectionTest()).toBe(1);
   });
 
   it("return null when without Initialize", async (ctx) => {
@@ -61,6 +61,6 @@ describe("ConnectionTest", () => {
       },
     });
 
-    expect(await exported.MyClass.ConnectionTest()).toBe(null);
+    expect(await exported.PokedexMaster.ConnectionTest()).toBe(null);
   });
 });
