@@ -47,31 +47,32 @@ const PokemonList: FC<{ query: string }> = ({ query }) => {
 
   return (
     <ul>
-      {pokemons?.map((v) => (
-        <li
-          style={{ listStyleType: "none" }}
-          onClick={() => {
-            if (capturedPokemonIds?.some((c) => c === v.id)) {
-              remove.mutate({ capturedId: v.id });
-            } else {
-              add.mutate({ capturedId: v.id });
-            }
-          }}
-          key={v.id}
-        >
-          <span
-            style={{
-              paddingRight: "8px",
-              color: capturedPokemonIds?.some((c) => c === v.id)
-                ? "red"
-                : "gray",
+      {pokemons?.map((v) => {
+        const isCaptured = capturedPokemonIds?.some((c) => c === v.id) ?? false;
+        return (
+          <li
+            style={{ listStyleType: "none" }}
+            onClick={() => {
+              if (isCaptured) {
+                remove.mutate({ capturedId: v.id });
+              } else {
+                add.mutate({ capturedId: v.id });
+              }
             }}
+            key={v.id}
           >
-            ●
-          </span>
-          {("000" + v.id).slice(-3)}: {v.name}
-        </li>
-      ))}
+            <span
+              style={{
+                paddingRight: "8px",
+                color: isCaptured ? "red" : "gray",
+              }}
+            >
+              ●
+            </span>
+            {("000" + v.id).slice(-3)}: {v.name}
+          </li>
+        );
+      })}
     </ul>
   );
 };
