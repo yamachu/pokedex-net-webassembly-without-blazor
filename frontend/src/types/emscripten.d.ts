@@ -2,6 +2,7 @@
 export type FS = {
   filesystems: {
     IDBFS: IDBFS /** If .csproj contains <EmccExtraLDFlags>-lidbfs.js</EmccExtraLDFlags> */;
+    MEMFS: MEMFS; // Default
   };
 
   mount: (type: FileSystemType, opts: any, mountpoint: string) => any;
@@ -12,4 +13,5 @@ export type FS = {
 };
 
 interface IDBFS {}
-type FileSystemType = IDBFS;
+interface MEMFS {}
+type FileSystemType = IDBFS | MEMFS;

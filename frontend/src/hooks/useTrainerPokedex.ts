@@ -4,7 +4,7 @@ import {
 } from "dotnet-webassembly-type-helper";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { POKEDEX_DOTNET_RUNTIME } from "../../env";
-import type { FS } from "../types/emscripten";
+import type { FileSystemType, FS } from "../types/emscripten";
 import { useDotnet } from "./useDotnet";
 
 type PokedexAssemblyExported = Awaited<
@@ -15,6 +15,16 @@ type UsePokedexReturnType =
   | { ok: true; value: Pick<PokedexAssemblyExported, "TrainerPokedex"> };
 
 const pokedexRuntimeDictInitializedSet = new Set<string>();
+
+const usePermanentFileSystemIfRuntimeSupported = (
+  fileSystems: FS["filesystems"]
+): FileSystemType => {
+  if (fileSystems.IDBFS !== undefined) {
+    return fileSystems.IDBFS;
+  }
+  console.warn(`cannot use PermanentFileSystems like IDBFS, fallback MEMFS`);
+  return fileSystems.MEMFS;
+};
 
 export const useTrainerPokedex = (): UsePokedexReturnType => {
   const [initialized, setInitialized] = useState(false);
@@ -41,7 +51,11 @@ export const useTrainerPokedex = (): UsePokedexReturnType => {
     try {
       // FIXME: 2回以上走るとCrashする
       Module.FS_createPath("/", "data", true, true);
-      _FS.mount(_FS.filesystems.IDBFS, {}, "/data");
+      _FS.mount(
+        usePermanentFileSystemIfRuntimeSupported(_FS.filesystems),
+        {},
+        "/data"
+      );
     } catch (e) {
       console.error(e);
     }
