@@ -1,6 +1,9 @@
 import { Suspense, useState, type FC } from "react";
 import { POKEDEX_DICT_PATH } from "../../env";
+import { useAddCapturedPokemon } from "../hooks/useAddCapturedPokemon";
+import { useFetchCapturedPokemons } from "../hooks/useFetchCapturedPokemons";
 import { useFetchPokemonsWithQuery } from "../hooks/useFetchPokemonsWithQuery";
+import { useRemoveCapturedPokemon } from "../hooks/useRemoveCapturedPokemon";
 
 export const Advanced: FC = () => {
   const [query, setQuery] = useState("");
@@ -38,14 +41,38 @@ const PokemonList: FC<{ query: string }> = ({ query }) => {
     POKEDEX_DICT_PATH,
     query
   );
+  const { data: capturedPokemonIds } = useFetchCapturedPokemons();
+  const add = useAddCapturedPokemon();
+  const remove = useRemoveCapturedPokemon();
 
   return (
     <ul>
-      {pokemons?.map((v) => (
-        <li style={{ listStyleType: "none" }} key={v.id}>
-          {("000" + v.id).slice(-3)}: {v.name}
-        </li>
-      ))}
+      {pokemons?.map((v) => {
+        const isCaptured = capturedPokemonIds?.some((c) => c === v.id) ?? false;
+        return (
+          <li
+            style={{ listStyleType: "none" }}
+            onClick={() => {
+              if (isCaptured) {
+                remove.mutate({ capturedId: v.id });
+              } else {
+                add.mutate({ capturedId: v.id });
+              }
+            }}
+            key={v.id}
+          >
+            <span
+              style={{
+                paddingRight: "8px",
+                color: isCaptured ? "red" : "gray",
+              }}
+            >
+              ●
+            </span>
+            {("000" + v.id).slice(-3)}: {v.name}
+          </li>
+        );
+      })}
     </ul>
   );
 };

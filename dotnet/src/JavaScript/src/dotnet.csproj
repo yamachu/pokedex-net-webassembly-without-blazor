@@ -14,6 +14,9 @@
 
     <JSPortOverrideTypeDefinitionOutputDir Condition="'$(TypeOutputDir)' != ''">$(TypeOutputDir)</JSPortOverrideTypeDefinitionOutputDir>
     <JSPortOverrideTypeDefinitionOutputDir Condition="'$(TypeOutputDir)' == ''">$([System.IO.Path]::Combine($(MSBuildProjectDirectory), "..", "..", "..", "..", "generated", "dotnet-webassembly-type-helper"))</JSPortOverrideTypeDefinitionOutputDir>
+
+    <!-- Link IDBDS for using LocalStorage on Browser -->
+    <EmccExtraLDFlags>-lidbfs.js</EmccExtraLDFlags>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.123" />

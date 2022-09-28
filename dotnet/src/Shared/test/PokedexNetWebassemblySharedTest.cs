@@ -74,4 +74,6 @@ public class PokedexNetWebassemblySharedTest
             pokemon00
         );
     }
+
+    // TODO: TrainerPokedexUsecaseTest
 }
