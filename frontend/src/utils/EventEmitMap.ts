@@ -1,3 +1,5 @@
+import { TypedEventTarget } from "./TypedEventTarget";
+
 // NOTE: Internal use, we don't subscribe this event
 // For useSyncExternalStore
 type MapEventDetail<K, V> =
@@ -11,10 +13,12 @@ type MapEventDetail<K, V> =
       value: V;
     };
 
+type CustomMapEvent<K, V> = CustomEvent<MapEventDetail<K, V>>;
+
 export class EventEmitMap<
   K extends string | number = string,
   V = any
-> extends EventTarget /* TODO: Typed EventTarget... */ {
+> extends TypedEventTarget<MapEventDetail<K, V>["type"], CustomMapEvent<K, V>> {
   private _map: Map<K, V>;
   constructor(args?: ConstructorParameters<typeof Map<K, V>>) {
     super();
