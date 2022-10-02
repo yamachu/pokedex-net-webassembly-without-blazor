@@ -1,18 +1,30 @@
 import { type RuntimeAPI } from "@microsoft/dotnet-runtime";
-import { useEffect, useState } from "react";
+import { useEffect, useSyncExternalStore } from "react";
+import { EventEmitMap } from "../utils/EventEmitMap";
 
 const is_browser = typeof window != "undefined";
 if (!is_browser) throw new Error(`Expected to be running in a browser`);
 
-const dotnetRuntimeMap = new Map<
+const dotnetRuntimeMap = new EventEmitMap<
   string,
   | { isLoaded: false }
   | { isLoaded: true; runtime: RuntimeAPI; error: undefined }
   | { isLoaded: true; runtime: undefined; error: Error }
 >();
 
+const subscribe = (onStoreChange: () => void) => {
+  dotnetRuntimeMap.addEventListener("set", onStoreChange);
+  dotnetRuntimeMap.addEventListener("delete", onStoreChange);
+  return () => {
+    dotnetRuntimeMap.removeEventListener("set", onStoreChange);
+    dotnetRuntimeMap.removeEventListener("delete", onStoreChange);
+  };
+};
+
 export const useDotnet = (runtimeUrl: string) => {
-  const [, forceUpdate] = useState({});
+  const runtime = useSyncExternalStore(subscribe, () =>
+    dotnetRuntimeMap.get(runtimeUrl)
+  );
 
   // TODO: Support multi runtime
   useEffect(() => {
@@ -23,7 +35,6 @@ export const useDotnet = (runtimeUrl: string) => {
     }
 
     dotnetRuntimeMap.set(mapKey, { isLoaded: false });
-    forceUpdate({});
 
     import(runtimeUrl)
       .then((v: typeof import("@microsoft/dotnet-runtime")) =>
@@ -35,7 +46,6 @@ export const useDotnet = (runtimeUrl: string) => {
           runtime: v,
           error: undefined,
         });
-        forceUpdate({});
       })
       .catch((e) => {
         dotnetRuntimeMap.set(mapKey, {
@@ -43,9 +53,8 @@ export const useDotnet = (runtimeUrl: string) => {
           error: e,
           runtime: undefined,
         });
-        forceUpdate({});
       });
   }, [runtimeUrl]);
 
-  return dotnetRuntimeMap.get(runtimeUrl) ?? { isLoaded: false };
+  return runtime ?? { isLoaded: false };
 };
