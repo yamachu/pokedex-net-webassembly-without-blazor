@@ -35,7 +35,7 @@ describe("useFetchPokemonWithQuery", async () => {
 
     await waitFor(() => result.current.isSuccess);
 
-    expect(result.current.data).toStrictEqual([]);
+    expect(result.current.data).toBeUndefined();
 
     rerender({ query: "けつ" });
 
