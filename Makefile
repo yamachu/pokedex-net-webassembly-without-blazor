@@ -18,3 +18,6 @@ _test/dotnet:
 
 _test/frontend:
 	$(MAKE) -C frontend test
+
+__clean:
+	git clean -xdf 
