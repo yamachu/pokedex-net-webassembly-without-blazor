@@ -26,7 +26,7 @@ public partial class PokedexMaster
         {
             return await Task.FromException<string>(new Exception("Must Initialize"));
         }
-        var result = await QueryPokemon.FetchPokemons(dbHelper);
+        var result = await QueryPokemon.FetchPokemonsWithMapping(dbHelper);
 
         return JsonSerializer.Serialize(new FetchPokemonsReturnJsonType(result), typeof(FetchPokemonsReturnJsonType), PokemonsJsonSerializerContext.Default);
     }
@@ -39,7 +39,7 @@ public partial class PokedexMaster
         {
             return await Task.FromException<string>(new Exception("Must Initialize"));
         }
-        var result = await QueryPokemon.FetchPokemons(dbHelper, query);
+        var result = await QueryPokemon.FetchPokemonsWithMapping(dbHelper, query);
 
         return JsonSerializer.Serialize(new FetchPokemonsReturnJsonType(result), typeof(FetchPokemonsReturnJsonType), PokemonsJsonSerializerContext.Default);
     }
