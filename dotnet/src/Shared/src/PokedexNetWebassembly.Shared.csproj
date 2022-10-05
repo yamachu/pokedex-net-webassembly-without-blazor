@@ -11,4 +11,9 @@
     <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.9" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- resolve?: ManagedError: The type initializer for 'AnonHostModuleHolder' threw an exception. -->
+    <TrimmerRootAssembly Include="Dapper" />
+    <TrimmerRootAssembly Include="Microsoft.Data.Sqlite" />
+  </ItemGroup>
 </Project>

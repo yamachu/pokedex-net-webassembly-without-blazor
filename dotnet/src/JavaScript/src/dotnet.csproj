@@ -35,4 +35,10 @@
   <Target Name="MakeTypeOutputDir" BeforeTargets="BeforeCompile">
     <MakeDir Directories="$(JSPortOverrideTypeDefinitionOutputDir)"/>
   </Target>
+
+  <ItemGroup>
+    <!-- resolve?: ManagedError: The type initializer for 'AnonHostModuleHolder' threw an exception. -->
+    <TrimmerRootAssembly Include="Dapper" />
+    <TrimmerRootAssembly Include="Microsoft.Data.Sqlite" />
+  </ItemGroup>
 </Project>
