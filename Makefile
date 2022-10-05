@@ -5,7 +5,7 @@ test:
 	$(MAKE) _test/dotnet _test/frontend
 
 _build/dotnet:
-	$(MAKE) -C dotnet setup build
+	$(MAKE) -C dotnet setup publish
 
 _build/console:
 	$(MAKE) -C console setup build run
