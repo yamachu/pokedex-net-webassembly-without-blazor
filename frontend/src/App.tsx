@@ -28,6 +28,9 @@ export const App: FC = () => {
             <NavItemContainer>
               <Link to={"/basic"}>Basic</Link>
             </NavItemContainer>
+            <NavItemContainer>
+              <Link to={"/advanced"}>Basic</Link>
+            </NavItemContainer>
           </ul>
           <NavItemContainer Container={"div"}>
             <a href={githubRepositoryUrl} target={"_blank"}>

@@ -15,7 +15,7 @@ export const Index: FC = () => {
           dotnet library and list them
         </li>
         <li style={ContentLiStyle}>
-          <Link to={"/"}>Advanced</Link>
+          <Link to={"/advanced"}>Advanced</Link>
           <span style={{ padding: "0 8px" }}>/</span>Multi runtime (WIP)
         </li>
       </ul>
