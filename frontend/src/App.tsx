@@ -29,7 +29,7 @@ export const App: FC = () => {
               <Link to={"/basic"}>Basic</Link>
             </NavItemContainer>
             <NavItemContainer>
-              <Link to={"/advanced"}>Basic</Link>
+              <Link to={"/advanced"}>Advanced</Link>
             </NavItemContainer>
           </ul>
           <NavItemContainer Container={"div"}>
