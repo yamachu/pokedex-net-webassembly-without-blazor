@@ -1,3 +1,54 @@
 @page "/pokedex"
+@inject HttpClient Http
+@using PokedexNetWebassembly.Shared
+@using PokedexNetWebassembly.Shared.Infrastructures
+@using PokedexNetWebassembly.Shared.Usecases
 
 <PageTitle>Pokedex</PageTitle>
+
+<h1>Pokedex</h1>
+
+<h2>Basic demo</h2>
+
+<p>This demonstration does the following</p>
+
+<ol>
+    <li>Run .NET WebAssembly runtime</li>
+    <li>Fetch sqlite db file (pokedex.db)</li>
+    <li>
+        Mount db file to Virtual File System on .NET WebAssembly runtime
+    </li>
+    <li>Fetch db data from .NET Program by using JavaScript API</li>
+</ol>
+
+<p>Listing Kanto Pokemons!</p>
+
+@if (pokemons == null)
+{
+    <p>Now loading</p>
+}
+else
+{
+    <ul>
+        @foreach (var pokemon in pokemons)
+        {
+            <li style="list-style-type: none;">
+                @pokemon.Id.ToString("000"): @pokemon.Name
+            </li>
+        }
+    </ul>
+}
+
+@code {
+    private SqliteHelper? dbHelper;
+    private Pokemon[]? pokemons;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var dbData = await Http.GetByteArrayAsync("sample-data/pokedex.db");
+        Directory.CreateDirectory("/work");
+        File.WriteAllBytes("/work/pokedex.db", dbData);
+        dbHelper = new SqliteHelper(() => "Data Source=/work/pokedex.db");
+        pokemons = await QueryPokemon.FetchPokemons(dbHelper);
+    }
+}
