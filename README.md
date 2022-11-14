@@ -2,8 +2,8 @@
 
 ## Required
 
-- .NET 7 rc1 >
-  - wasm-experimental workload (if you use rc1)
+- .NET 7
+  - wasm-experimental workload
 - Node.js v16 >
 
 if possible, make (if you do not have it, run what is written in the Makefile)
