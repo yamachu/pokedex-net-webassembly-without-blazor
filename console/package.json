@@ -9,7 +9,7 @@
     "run": "node dist/index.js"
   },
   "devDependencies": {
-    "@microsoft/dotnet-runtime-types": "file:../dotnet/src/JavaScript/src/bin/Release/net7.0/browser-wasm",
+    "@microsoft/dotnet-runtime-types": "file:../dotnet/src/JavaScript/src/bin/Release/net8.0/browser-wasm",
     "@types/node": "16.11.58",
     "typescript": "4.8.3"
   },
